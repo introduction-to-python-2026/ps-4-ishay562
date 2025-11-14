@@ -23,8 +23,19 @@ def split_before_each_uppercases(formula):
     return split_formula
 
 def split_at_first_digit(formula):
-  for i in range(0, len(formula) - 1):
-      if formula[i].isdigit() and i == 0:
-        return formula
-      elif formula[i].isdigit():
-                return (formula[:i], (formula[i:]))
+    digit_location = 0
+    for i, char in enumerate(formula):
+        if i == 0 and char.isdigit(): # handle cases like '40' (prefix will be empty) or '4H' (prefix will be empty) or '4' (prefix will be empty)
+            digit_location = i
+            break
+        if char.isdigit():
+            digit_location = i
+            break
+        digit_location = i + 1 # if no digit is found, digit_location will be len(formula)
+
+    if digit_location == len(formula): # No digit found
+        return formula, 1
+    else:
+        prefix = formula[:digit_location]
+        numeric_part = int(formula[digit_location:])
+        return prefix, numeric_part
