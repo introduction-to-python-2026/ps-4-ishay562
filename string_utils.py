@@ -23,4 +23,8 @@ def split_before_each_uppercases(formula):
     return split_formula
 
 def split_at_first_digit(formula):
-    pass # Replace the `pass` with your code
+  for i in range(0, len(formula) - 1):
+      if formula[i].isdigit() and i == 0:
+        return formula
+      elif formula[i].isdigit():
+                return (formula[:i], (formula[i:]))
